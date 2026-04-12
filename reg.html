@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELLCORP — CREATE ACCOUNT</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hell-red: #FF0022;
+    --light-bg: #F8F8F8;
+    --light-gray: #EDEDED;
+    --mid-gray: #D4D4D4;
+    --dark-text: #1A1A1A;
+    --dim-text: #555555;
+    --glow: rgba(255,0,34,0.25);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: linear-gradient(135deg, var(--light-bg) 0%, #FFFFFF 100%);
+    color: var(--dark-text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(var(--mid-gray) 1px, transparent 1px),
+      linear-gradient(90deg, var(--mid-gray) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.97);
+    border: 1px solid var(--mid-gray);
+    border-radius: 16px;
+    padding: 60px 55px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.09);
+    backdrop-filter: blur(15px);
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    text-align: center;
+    color: var(--hell-red);
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+  .logo span { color: var(--dark-text); }
+
+  .subtitle {
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.35em;
+    color: var(--hell-red);
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+
+  .form-group {
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .form-input {
+    width: 100%;
+    padding: 14px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--mid-gray);
+    color: var(--dark-text);
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  .form-input:focus {
+    border-bottom-color: var(--hell-red);
+  }
+  .form-label {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--hell-red);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .form-input:focus ~ .form-label,
+  .form-input:not(:placeholder-shown) ~ .form-label {
+    opacity: 1;
+    top: -26px;
+  }
+
+  .btn-auth {
+    width: 100%;
+    background: var(--hell-red);
+    color: white;
+    border: none;
+    padding: 18px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  .btn-auth:hover {
+    background: #FF4500;
+    box-shadow: 0 0 50px var(--glow);
+    transform: translateY(-3px);
+  }
+
+  .login-link {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 0.9rem;
+    color: var(--dim-text);
+  }
+  .login-link a {
+    color: var(--hell-red);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  footer {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--dim-text);
+  }
+  footer a {
+    color: var(--dim-text);
+    text-decoration: none;
+    margin: 0 12px;
+  }
+  footer a:hover { color: var(--hell-red); }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="logo">HELL<span>CORP</span></div>
+    <div class="subtitle">BURN NEW ACCOUNT</div>
+
+    <div class="form-group">
+      <input type="text" class="form-input" placeholder="Your Name" id="name">
+      <label class="form-label">FULL NAME</label>
+    </div>
+
+    <div class="form-group">
+      <input type="email" class="form-input" placeholder="inferno@hellcorp.io" id="email">
+      <label class="form-label">EMAIL ADDRESS</label>
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-input" placeholder="••••••••" id="password">
+      <label class="form-label">CREATE PASSWORD</label>
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-input" placeholder="••••••••" id="confirm">
+      <label class="form-label">CONFIRM PASSWORD</label>
+    </div>
+
+    <button onclick="fakeRegister()" class="btn-auth">FORGE ACCOUNT →</button>
+
+    <div class="login-link">
+      Already have access? <a href="auth.html">Sign In</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 HELLCORP • 
+    <a href="/">HOME</a> • 
+    <a href="#">TERMS</a> • 
+    <a href="#">PRIVACY</a>
+  </footer>
+
+  <script>
+    function fakeRegister() {
+      alert("🔥 ACCOUNT SUCCESSFULLY FORGED — WELCOME TO HELLCORP");
+      setTimeout(() => window.location.href = '/', 1200);
+    }
+  </script>
+</body>
+</html>
