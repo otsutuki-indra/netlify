@@ -1,135 +1,786 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template</title>
-  </head>
-  <body
-    x-data="{ page: 'alerts', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-    x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark bg-gray-900': darkMode === true}"
-  >
-    <!-- ===== Preloader Start ===== -->
-    <include src="./partials/preloader.html"></include>
-    <!-- ===== Preloader End ===== -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — Hellcorp</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hell-red: #FF0022;
+    --ash: #1A1A1A;
+    --void: #0A0A0A;
+    --white: #F0EDE8;
+    --dim: #888888;
+    --glow: rgba(255,0,34,0.6);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    cursor: none;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.35;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none;
+    z-index: 9001;
+  }
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--hell-red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s;
+    box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow);
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,0,34,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.15s ease;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    border-bottom: 1px solid rgba(255,0,34,0.15);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(10px);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+    color: var(--hell-red);
+    text-shadow: 0 0 30px var(--glow);
+    animation: flicker 4s infinite;
+  }
+  .logo span { color: var(--white); }
+  @keyframes flicker {
+    0%,95%,100% { opacity:1; }
+    96% { opacity:0.8; }
+    97% { opacity:1; }
+    98% { opacity:0.6; }
+    99% { opacity:1; }
+  }
+  .nav-links { display:flex; gap:40px; list-style:none; }
+  .nav-links a {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s, text-shadow 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--hell-red);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--hell-red); text-shadow: 0 0 15px var(--glow); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--hell-red);
+    color: var(--hell-red);
+    background: transparent;
+    padding: 10px 24px;
+    cursor: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hell-red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+  .nav-btn:hover { color: var(--void); }
+  .nav-btn:hover::before { transform: scaleX(1); }
+  .legal-hero {
+    padding: 160px 60px 60px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,0,34,0.1);
+  }
+  .legal-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,34,0.08) 0%, transparent 70%);
+    top: 20%; right: -100px;
+    pointer-events: none;
+  }
+  .legal-breadcrumb {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .legal-breadcrumb a { color: var(--hell-red); text-decoration: none; }
+  .legal-breadcrumb a:hover { text-decoration: underline; }
+  .legal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+  }
+  .legal-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .legal-meta span { color: var(--hell-red); }
+  .legal-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 60px 120px;
+  }
+  .legal-body h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-top: 56px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,0,34,0.15);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .legal-body h2 .sec-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--hell-red);
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+  }
+  .legal-body h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+  .legal-body p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(240,237,232,0.7);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .legal-body ul {
+    margin: 12px 0 20px 24px;
+    list-style: none;
+  }
+  .legal-body ul li {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(240,237,232,0.7);
+    line-height: 1.9;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 6px;
+  }
+  .legal-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 6px;
+    height: 1px;
+    background: var(--hell-red);
+  }
+  .legal-body strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+  .legal-body .highlight-box {
+    background: rgba(255,0,34,0.04);
+    border-left: 3px solid var(--hell-red);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .legal-body .highlight-box p { margin-bottom: 0; }
+  .legal-body .jurisdiction-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255,0,34,0.15);
+  }
+  .jurisdiction-tabs button {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--dim);
+    border: none;
+    padding: 14px 24px;
+    cursor: none;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .jurisdiction-tabs button::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 2px;
+    background: var(--hell-red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .jurisdiction-tabs button.active { color: var(--hell-red); }
+  .jurisdiction-tabs button.active::after { transform: scaleX(1); }
+  .jurisdiction-tabs button:hover { color: var(--white); }
+  .jurisdiction-content { display: none; }
+  .jurisdiction-content.active { display: block; }
+  .red-accent {
+    display: inline-block;
+    width: 60px; height: 3px;
+    background: var(--hell-red);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .red-accent::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, white, transparent);
+    animation: shine 2s infinite;
+  }
+  @keyframes shine {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  footer {
+    background: var(--void);
+    border-top: 1px solid rgba(255,0,34,0.1);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    color: var(--hell-red);
+    text-shadow: 0 0 20px var(--glow);
+  }
+  .footer-copy {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-links a {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    cursor: none;
+  }
+  .footer-links a:hover { color: var(--hell-red); }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .legal-hero { padding: 140px 24px 40px; }
+    .legal-body { padding: 40px 24px 80px; }
+    .legal-meta { gap: 16px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 30px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a href="index.html" class="logo" style="text-decoration:none;">HELL<span>CORP</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="index.html#process">Process</a></li>
+  </ul>
+  <button class="nav-btn" onclick="window.location.href='index.html#contact'">IGNITE PROJECT</button>
+</nav>
 
-    <!-- ===== Page Wrapper Start ===== -->
-    <div class="flex h-screen overflow-hidden">
-      <!-- ===== Sidebar Start ===== -->
-      <include src="./partials/sidebar.html"></include>
-      <!-- ===== Sidebar End ===== -->
+<div class="legal-hero">
+  <div class="legal-breadcrumb"><a href="index.html">Hellcorp</a> // Legal // Terms of Use</div>
+  <h1 class="legal-title">TERMS <span style="color:var(--hell-red)">OF USE</span></h1>
+  <div class="red-accent"></div>
+  <div class="legal-meta">
+    <div>EFFECTIVE: <span>JANUARY 1, 2025</span></div>
+    <div>LAST UPDATED: <span>JUNE 15, 2025</span></div>
+    <div>VERSION: <span>3.2.1</span></div>
+  </div>
+</div>
 
-      <!-- ===== Content Area Start ===== -->
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <!-- Small Device Overlay Start -->
-        <include src="./partials/overlay.html" />
-        <!-- Small Device Overlay End -->
+<div class="legal-body">
 
-        <!-- ===== Header Start ===== -->
-        <include src="./partials/header.html" />
-        <!-- ===== Header End ===== -->
+  <div class="jurisdiction-tabs">
+    <button class="active" onclick="switchJurisdiction('us', this)">United States</button>
+    <button onclick="switchJurisdiction('eu', this)">European Union</button>
+    <button onclick="switchJurisdiction('global', this)">Global</button>
+  </div>
 
-        <!-- ===== Main Content Start ===== -->
-        <main>
-          <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6">
-            <!-- Breadcrumb Start -->
-            <div x-data="{ pageName: `Alerts`}">
-              <include src="./partials/breadcrumb.html" />
-            </div>
-            <!-- Breadcrumb End -->
+  <!-- ==================== US ==================== -->
+  <div class="jurisdiction-content active" id="jur-us">
 
-            <div class="space-y-5 sm:space-y-6">
-              <div
-                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
-              >
-                <div class="px-6 py-5">
-                  <h3
-                    class="text-base font-medium text-gray-800 dark:text-white/90"
-                  >
-                    Success Alert
-                  </h3>
-                </div>
-                <div
-                  class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6"
-                >
-                  <div class="space-y-6">
-                    <include src="./partials/alert/alert-success.html" />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
-              >
-                <div class="px-6 py-5">
-                  <h3
-                    class="text-base font-medium text-gray-800 dark:text-white/90"
-                  >
-                    Warning Alert
-                  </h3>
-                </div>
-                <div
-                  class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6"
-                >
-                  <div class="space-y-6">
-                    <include src="./partials/alert/alert-warning.html" />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
-              >
-                <div class="px-6 py-5">
-                  <h3
-                    class="text-base font-medium text-gray-800 dark:text-white/90"
-                  >
-                    Error Alert
-                  </h3>
-                </div>
-                <div
-                  class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6"
-                >
-                  <div class="space-y-6">
-                    <include src="./partials/alert/alert-error.html" />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
-              >
-                <div class="px-6 py-5">
-                  <h3
-                    class="text-base font-medium text-gray-800 dark:text-white/90"
-                  >
-                    Info Alert
-                  </h3>
-                </div>
-                <div
-                  class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6"
-                >
-                  <div class="space-y-6">
-                    <include src="./partials/alert/alert-info.html" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <!-- ===== Main Content End ===== -->
-      </div>
-      <!-- ===== Content Area End ===== -->
+    <div class="highlight-box">
+      <p><strong>Agreement to Terms.</strong> By accessing or using any Hellcorp Inc. service, website, platform, API, or product ("Services"), you agree to be bound by these Terms of Use ("Terms"). If you do not agree, you must not use our Services. These Terms constitute a legally binding agreement between you ("Client," "User," or "you") and Hellcorp Inc., a Delaware corporation with its principal place of business at Level 66, Hellfire Tower, New York, NY 10001.</p>
     </div>
-    <!-- ===== Page Wrapper End ===== -->
-  </body>
+
+    <h2><span class="sec-num">01</span> DEFINITIONS</h2>
+    <p><strong>"Services"</strong> means all software development, AI/ML engineering, cybersecurity consulting, cloud architecture, blockchain development, UI/UX design, data engineering, and any other professional or technical services provided by Hellcorp Inc.</p>
+    <p><strong>"Deliverables"</strong> means all work products, codebases, designs, documentation, models, reports, or other tangible outputs created by Hellcorp pursuant to a Statement of Work (SOW) or Service Agreement.</p>
+    <p><strong>"Client Materials"</strong> means any data, content, trademarks, proprietary information, or other materials provided by the Client to Hellcorp for use in connection with the Services.</p>
+    <p><strong>"Confidential Information"</strong> means any non-public information disclosed by either party, whether orally, in writing, or by inspection, that is designated as confidential or that reasonably should be understood to be confidential.</p>
+
+    <h2><span class="sec-num">02</span> ELIGIBILITY & ACCOUNTS</h2>
+    <p>You must be at least 18 years of age and have the legal capacity to enter into binding agreements. If you are acting on behalf of an entity, you represent that you have the authority to bind that entity to these Terms.</p>
+    <ul>
+      <li>You are responsible for maintaining the confidentiality of any account credentials, API keys, or access tokens issued to you.</li>
+      <li>You must promptly notify Hellcorp of any unauthorized use of your account or any security breach.</li>
+      <li>Hellcorp reserves the right to suspend or terminate accounts that violate these Terms or exhibit suspicious activity.</li>
+      <li>One individual or entity may not maintain more than one account without prior written consent.</li>
+    </ul>
+
+    <h2><span class="sec-num">03</span> SCOPE OF SERVICES</h2>
+    <p>The specific services to be provided by Hellcorp shall be defined in a separate Statement of Work (SOW) or Master Service Agreement (MSA) executed by both parties. In the absence of a specific SOW:</p>
+    <ul>
+      <li>Hellcorp shall provide Services in accordance with industry-standard professional practices.</li>
+      <li>Timelines, milestones, and deliverables are estimates unless expressly guaranteed in writing.</li>
+      <li>Hellcorp reserves the right to engage subcontractors or third-party specialists, provided they are bound by equivalent confidentiality obligations.</li>
+      <li>Services do not include any guarantees of business outcomes, revenue increases, or market performance unless explicitly stated in an SOW.</li>
+    </ul>
+
+    <h2><span class="sec-num">04</span> CLIENT OBLIGATIONS</h2>
+    <p>As a condition of receiving Services, you agree to:</p>
+    <ul>
+      <li>Provide accurate, complete, and timely information, materials, and feedback as reasonably requested by Hellcorp.</li>
+      <li>Ensure that any Client Materials provided do not infringe upon the intellectual property or other rights of any third party.</li>
+      <li>Designate a primary point of contact with decision-making authority for the duration of the engagement.</li>
+      <li>Comply with all applicable laws, regulations, and industry standards relevant to your use of the Deliverables.</li>
+      <li>Not use the Services or Deliverables for any unlawful purpose, including but not limited to the development of malware, exploitation tools, or systems intended to cause harm.</li>
+    </ul>
+
+    <h2><span class="sec-num">05</span> INTELLECTUAL PROPERTY</h2>
+    <h3>5.1 Ownership of Deliverables</h3>
+    <p>Upon full payment of all fees due, you shall own all right, title, and interest in the custom Deliverables created specifically for you under an SOW, subject to the following:</p>
+    <ul>
+      <li>Hellcorp retains ownership of all pre-existing intellectual property, frameworks, libraries, tools, and methodologies incorporated into the Deliverables (the "Hellcorp IP").</li>
+      <li>Hellcorp grants you a non-exclusive, perpetual, irrevocable, worldwide, royalty-free license to use the Hellcorp IP embedded in the Deliverables as necessary to operate the Deliverables.</li>
+      <li>Hellcorp reserves the right to use general knowledge, skills, experience, techniques, and know-how acquired during the engagement for future projects.</li>
+    </ul>
+    <h3>5.2 Pre-Existing IP</h3>
+    <p>Any Hellcorp tools, open-source components, or third-party libraries used in the Deliverables remain subject to their respective license terms. Hellcorp shall provide a complete list of all third-party components and their license types upon delivery.</p>
+    <h3>5.3 Client Materials License</h3>
+    <p>You grant Hellcorp a limited, non-exclusive, non-transferable license to use, reproduce, and modify Client Materials solely for the purpose of providing the Services.</p>
+
+    <h2><span class="sec-num">06</span> CONFIDENTIALITY</h2>
+    <p>Each party agrees to:</p>
+    <ul>
+      <li>Hold the other party's Confidential Information in strict confidence and not disclose it to any third party without prior written consent.</li>
+      <li>Use Confidential Information solely for the purpose of performing obligations under these Terms.</li>
+      <li>Protect Confidential Information using the same degree of care used to protect its own confidential information, but in no event less than reasonable care.</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>Exceptions.</strong> Confidentiality obligations do not apply to information that: (a) is or becomes publicly available through no fault of the receiving party; (b) was rightfully known prior to disclosure; (c) is independently developed without reference to the confidential information; or (d) is required to be disclosed by law, regulation, or court order, provided the receiving party gives prompt written notice.</p>
+    </div>
+
+    <h2><span class="sec-num">07</span> PAYMENT & FEES</h2>
+    <ul>
+      <li>Fees are specified in the applicable SOW or MSA. In the absence of a specified fee structure, Hellcorp's standard hourly or project rates apply.</li>
+      <li>Invoices are due within 30 days of receipt unless otherwise agreed in writing.</li>
+      <li>Late payments accrue interest at the rate of 1.5% per month or the maximum rate permitted by applicable law, whichever is lower.</li>
+      <li>Hellcorp may suspend Services for accounts that are 15 or more days overdue, after providing 48 hours written notice.</li>
+      <li>All fees are exclusive of applicable taxes. Client is responsible for any sales tax, VAT, GST, or similar charges.</li>
+    </ul>
+
+    <h2><span class="sec-num">08</span> WARRANTIES & DISCLAIMERS</h2>
+    <h3>8.1 Limited Warranty</h3>
+    <p>Hellcorp warrants that: (a) Services will be performed in a professional and workmanlike manner; (b) Deliverables will materially conform to the specifications in the applicable SOW; and (c) Hellcorp has the right to grant the licenses described herein. This warranty expires 90 days after delivery of the applicable Deliverable ("Warranty Period").</p>
+    <h3>8.2 Remedies</h3>
+    <p>Hellcorp's sole obligation under the limited warranty is to use commercially reasonable efforts to correct any non-conformity reported during the Warranty Period, at no additional cost.</p>
+    <h3>8.3 Disclaimer</h3>
+    <div class="highlight-box">
+      <p><strong>EXCEPT AS EXPRESSLY SET FORTH IN SECTION 8.1, THE SERVICES AND DELIVERABLES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE. HELLCORP EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES, INCLUDING WITHOUT LIMITATION WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING OR USAGE OF TRADE.</strong></p>
+    </div>
+
+    <h2><span class="sec-num">09</span> LIMITATION OF LIABILITY</h2>
+    <div class="highlight-box">
+      <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:</strong></p>
+      <p><strong>(a)</strong> HELLCORP SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, REVENUE, DATA, BUSINESS OPPORTUNITIES, OR GOODWILL, REGARDLESS OF THE THEORY OF LIABILITY OR WHETHER SUCH DAMAGES WERE FORESEEABLE.</p>
+      <p><strong>(b)</strong> HELLCORP'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THESE TERMS OR THE SERVICES SHALL NOT EXCEED THE GREATER OF: (I) THE TOTAL FEES PAID BY THE CLIENT TO HELLCORP DURING THE 12 MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO LIABILITY; OR (II) $100,000 USD.</p>
+    </div>
+
+    <h2><span class="sec-num">10</span> INDEMNIFICATION</h2>
+    <p>The Client shall indemnify, defend, and hold harmless Hellcorp, its officers, directors, employees, and agents from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from: (a) Client's breach of these Terms; (b) Client Materials infringing third-party rights; (c) Client's use of Deliverables in violation of applicable law; or (d) Client's modification of Deliverables after delivery.</p>
+    <p>Hellcorp shall indemnify the Client against claims that Deliverables, as delivered, infringe a valid patent, copyright, or trademark of a third party in the jurisdiction specified in the SOW. Hellcorp's obligation is conditioned on the Client: (a) providing prompt written notice; (b) granting Hellcorp sole control of the defense; and (c) providing reasonable cooperation.</p>
+
+    <h2><span class="sec-num">11</span> TERMINATION</h2>
+    <ul>
+      <li>Either party may terminate for convenience with 30 days' written notice. In such case, the Client shall pay for all Services performed and expenses incurred through the effective date.</li>
+      <li>Either party may terminate for cause immediately upon written notice if the other party materially breaches these Terms and fails to cure within 15 days.</li>
+      <li>Hellcorp may terminate immediately if the Client fails to make payment within 30 days of the due date.</li>
+      <li>Upon termination, all licenses granted to the Client for non-paid Deliverables immediately cease.</li>
+      <li>Sections 5, 6, 8.3, 9, 10, 12, 13, and 14 survive termination.</li>
+    </ul>
+
+    <h2><span class="sec-num">12</span> DATA PROTECTION (US)</h2>
+    <p>Hellcorp processes personal data in accordance with applicable US federal and state privacy laws, including but not limited to:</p>
+    <ul>
+      <li><strong>California Consumer Privacy Act (CCPA)</strong> — California residents have the right to know, delete, and opt-out of the sale of personal information. To exercise these rights, contact privacy@hellcorp.io.</li>
+      <li><strong>California Privacy Rights Act (CPRA)</strong> — Additional rights including correction, limitation of sensitive data use, and appeal of privacy decisions.</li>
+      <li><strong>State-Level Breach Notification</strong> — Hellcorp will notify affected individuals in accordance with the breach notification laws of all 50 US states in the event of a security incident involving personal data.</li>
+      <li><strong>COPPA</strong> — Hellcorp does not knowingly collect personal information from children under 13.</li>
+    </ul>
+
+    <h2><span class="sec-num">13</span> DISPUTE RESOLUTION</h2>
+    <h3>13.1 Informal Resolution</h3>
+    <p>Before initiating any formal proceeding, the parties shall attempt to resolve the dispute through good-faith negotiation. Either party may initiate this process by sending written notice to the other party's designated contact.</p>
+    <h3>13.2 Binding Arbitration</h3>
+    <p>If the dispute is not resolved within 30 days, it shall be resolved by binding arbitration administered by the American Arbitration Association (AAA) under its Commercial Arbitration Rules. The arbitration shall be conducted in New York, NY, before a single arbitrator with experience in technology disputes.</p>
+    <h3>13.3 Class Action Waiver</h3>
+    <p>YOU AGREE THAT ANY DISPUTE RESOLUTION PROCEEDINGS SHALL BE CONDUCTED ONLY ON AN INDIVIDUAL BASIS AND NOT IN A CLASS, CONSOLIDATED, OR REPRESENTATIVE ACTION. You waive any right to participate in a class action lawsuit or class-wide arbitration against Hellcorp.</p>
+    <h3>13.4 Governing Law</h3>
+    <p>These Terms are governed by the laws of the State of New York, without regard to its conflict of law principles. The United Nations Convention on Contracts for the International Sale of Goods (CISG) does not apply.</p>
+
+    <h2><span class="sec-num">14</span> GENERAL PROVISIONS</h2>
+    <ul>
+      <li><strong>Entire Agreement:</strong> These Terms, together with any SOW or MSA, constitute the entire agreement between the parties and supersede all prior or contemporaneous communications.</li>
+      <li><strong>Amendment:</strong> Hellcorp may update these Terms periodically. Material changes will be communicated via email or prominent notice. Continued use after the effective date constitutes acceptance.</li>
+      <li><strong>Severability:</strong> If any provision is held unenforceable, the remaining provisions remain in full force.</li>
+      <li><strong>Waiver:</strong> Failure to enforce any right does not constitute a waiver of that right.</li>
+      <li><strong>Assignment:</strong> Client may not assign these Terms without Hellcorp's prior written consent. Hellcorp may assign freely.</li>
+      <li><strong>Force Majeure:</strong> Neither party is liable for failure to perform due to causes beyond reasonable control, including pandemics, government actions, natural disasters, or cyberattacks on critical infrastructure.</li>
+      <li><strong>Notices:</strong> All notices shall be sent to the addresses specified in the applicable SOW, or to legal@hellcorp.io, and shall be deemed received upon confirmed delivery.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>Contact:</strong> For questions about these Terms, contact our legal team at <span style="color:var(--hell-red);">legal@hellcorp.io</span> or write to: Hellcorp Inc., Attn: Legal Department, Level 66, Hellfire Tower, New York, NY 10001, USA.</p>
+    </div>
+  </div>
+
+  <!-- ==================== EU ==================== -->
+  <div class="jurisdiction-content" id="jur-eu">
+
+    <div class="highlight-box">
+      <p><strong>Agreement to Terms.</strong> By accessing or using Hellcorp's Services within the European Economic Area (EEA), the United Kingdom, or Switzerland, you agree to be bound by these Terms of Use, which have been adapted to comply with EU law, including Regulation (EU) 2016/679 (GDPR), the Digital Services Act (DSA), and applicable member-state consumer protection legislation. The controller for data protection purposes is Hellcorp Ireland Ltd., 1 Grand Canal Street Upper, Dublin 4, D04 V5K8, Ireland.</p>
+    </div>
+
+    <h2><span class="sec-num">01</span> DEFINITIONS</h2>
+    <p>All definitions from the US jurisdiction apply, with the following additions and modifications:</p>
+    <ul>
+      <li><strong>"Data Subject"</strong> means an identified or identifiable natural person whose personal data is processed by Hellcorp in connection with the Services.</li>
+      <li><strong>"Processing"</strong> means any operation or set of operations performed on personal data, as defined in Article 4(2) of the GDPR.</li>
+      <li><strong>"Controller"</strong> and <strong>"Processor"</strong> have the meanings assigned under GDPR Articles 4(7) and 4(8) respectively.</li>
+      <li><strong>"Consumer"</strong> means any natural person acting for purposes outside their trade, business, or profession, as defined under EU consumer protection directives.</li>
+    </ul>
+
+    <h2><span class="sec-num">02</span> GDPR COMPLIANCE</h2>
+    <h3>2.1 Lawful Basis</h3>
+    <p>Hellcorp processes personal data only on the following lawful bases under Article 6 GDPR:</p>
+    <ul>
+      <li><strong>Contract performance</strong> — Processing necessary to perform the service agreement with the Client.</li>
+      <li><strong>Legitimate interests</strong> — Processing for business operations, fraud prevention, and security, subject to balancing tests documented in Hellcorp's Records of Processing Activities (ROPA).</li>
+      <li><strong>Consent</strong> — Where explicitly obtained for marketing communications, analytics cookies, or other non-essential processing.</li>
+      <li><strong>Legal obligation</strong> — Processing required by EU or member-state law (e.g., tax records, anti-money laundering).</li>
+    </ul>
+    <h3>2.2 Data Subject Rights</h3>
+    <p>Hellcorp recognizes and facilitates the following rights under GDPR Articles 15–22:</p>
+    <ul>
+      <li><strong>Right of access</strong> (Art. 15) — You may request a copy of your personal data.</li>
+      <li><strong>Right to rectification</strong> (Art. 16) — You may request correction of inaccurate data.</li>
+      <li><strong>Right to erasure</strong> (Art. 17) — You may request deletion, subject to lawful retention requirements.</li>
+      <li><strong>Right to restriction</strong> (Art. 18) — You may request limitation of processing in specified circumstances.</li>
+      <li><strong>Right to data portability</strong> (Art. 20) — You may receive your data in a structured, machine-readable format.</li>
+      <li><strong>Right to object</strong> (Art. 21) — You may object to processing based on legitimate interests or direct marketing.</li>
+      <li><strong>Right not to be subject to automated decision-making</strong> (Art. 22) — You may request human review of solely automated decisions with legal effects.</li>
+    </ul>
+    <p>To exercise any of these rights, contact <span style="color:var(--hell-red);">dpo@hellcorp.io</span>. Responses will be provided within one month, extendable by two months for complex requests, with notification of any extension.</p>
+    <h3>2.3 Data Protection Impact Assessments</h3>
+    <p>Hellcorp conducts Data Protection Impact Assessments (DPIAs) for any processing likely to result in high risk to individuals, in accordance with Article 35 GDPR and the EDPB guidelines.</p>
+
+    <h2><span class="sec-num">03</span> INTERNATIONAL DATA TRANSFERS</h2>
+    <p>Hellcorp may transfer personal data outside the EEA. Such transfers are carried out using one or more of the following safeguards in compliance with Chapter V GDPR:</p>
+    <ul>
+      <li><strong>Standard Contractual Clauses (SCCs)</strong> — Hellcorp implements the European Commission's 2021 Standard Contractual Clauses (Commission Implementing Decision 2021/914) for controller-to-controller and controller-to-processor transfers.</li>
+      <li><strong>Adequacy decisions</strong> — Transfers to countries recognized by the European Commission as providing adequate protection (e.g., UK post-Brexit adequacy, Japan, South Korea, Canada for commercial organizations).</li>
+      <li><strong>Binding Corporate Rules (BCRs)</strong> — Where applicable within the Hellcorp group of companies.</li>
+      <li><strong>Derogations</strong> — Only in limited circumstances as permitted under Article 49 GDPR, with appropriate supplementary measures where required by the Schrems II ruling and subsequent EDPB recommendations.</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>Schrems II Compliance:</strong> Hellcorp conducts Transfer Impact Assessments (TIAs) for each destination country prior to initiating data transfers. Supplementary measures (including encryption in transit and at rest, pseudonymization, and split processing) are implemented where the TIA identifies a gap in protection.</p>
+    </div>
+
+    <h2><span class="sec-num">04</span> EU CONSUMER PROTECTION</h2>
+    <p>For Consumers as defined above, the following additional protections apply:</p>
+    <ul>
+      <li><strong>Right of Withdrawal:</strong> Consumers have a 14-day withdrawal period for distance contracts under Directive 2011/83/EU, implemented via national law. For services that begin during the withdrawal period with the Consumer's express consent, the Consumer shall pay a proportionate amount corresponding to the services provided.</li>
+      <li><strong>Unfair Terms:</strong> No term that creates a significant imbalance to the detriment of the Consumer contrary to the requirements of good faith shall be enforceable, as per Directive 93/13/EEC.</li>
+      <li><strong>Fair Commercial Practices:</strong> Hellcorp complies with Directive 2005/29/EC on unfair business-to-consumer commercial practices.</li>
+      <li><strong>Digital Content:</strong> Where Deliverables constitute "digital content or services" under Directive (EU) 2019/770, the conformity requirements and remedies therein apply.</li>
+    </ul>
+
+    <h2><span class="sec-num">05</span> DIGITAL SERVICES ACT (DSA) COMPLIANCE</h2>
+    <p>Where Hellcorp's Services fall within the scope of Regulation (EU) 2022/2065 (Digital Services Act):</p>
+    <ul>
+      <li>Hellcorp designates a single point of contact for communication with authorities, the Digital Services Coordinator, and users.</li>
+      <li>Illegal content reporting mechanisms are available as applicable.</li>
+      <li>Transparency reports are published in accordance with DSA requirements.</li>
+      <li>Out-of-court dispute settlement mechanisms are provided.</li>
+    </ul>
+
+    <h2><span class="sec-num">06</span> INTELLECTUAL PROPERTY</h2>
+    <p>The IP provisions in Section 05 of the US jurisdiction apply, with the following modifications:</p>
+    <ul>
+      <li><strong>Moral Rights:</strong> To the extent that any Deliverables qualify as a "work" under the applicable EU member-state copyright law, Hellcorp waives all moral rights (droit moral / Urheberpersönlichkeitsrecht) to the fullest extent permitted by law. Where moral rights cannot be waived, the Client is granted a non-assertion undertaking.</li>
+      <li><strong>Database Rights:</strong> Any sui generis database rights in Deliverables are licensed to the Client on the same terms as the copyright license.</li>
+    </ul>
+
+    <h2><span class="sec-num">07</span> LIABILITY (EU)</h2>
+    <p>In addition to the limitations in Section 09 of the US jurisdiction:</p>
+    <ul>
+      <li>Hellcorp's liability for death or personal injury caused by negligence is not excluded or limited, in accordance with applicable EU and member-state law.</li>
+      <li>The limitation of liability does not apply to fraud, intentional misconduct, or gross negligence to the extent such exclusion is prohibited by mandatory member-state law.</li>
+      <li>For Consumer clients, the liability cap is set at the higher of the amounts specified in Section 09(US) or the maximum permitted under the applicable member-state consumer protection legislation.</li>
+      <li>The product liability regime under Directive 85/374/EEC (as amended) applies where Deliverables qualify as a "product" under that directive.</li>
+    </ul>
+
+    <h2><span class="sec-num">08</span> DISPUTE RESOLUTION (EU)</h2>
+    <h3>8.1 Governing Law</h3>
+    <p>For B2B clients, these Terms are governed by the laws of Ireland, without regard to conflict of law principles. Rome I Regulation (EC) No 593/2008 applies.</p>
+    <p>For Consumer clients, these Terms are governed by the laws of the EU member state of the Consumer's habitual residence, in accordance with Article 6(1) of Rome I.</p>
+    <h3>8.2 Jurisdiction</h3>
+    <p>Hellcorp submits to the exclusive jurisdiction of the courts of Dublin, Ireland for B2B disputes. For Consumer disputes, the Consumer may bring proceedings in the courts of their habitual residence, as provided under Article 18 of Brussels I bis Regulation (EU) No 1215/2012.</p>
+    <h3>8.3 Online Dispute Resolution</h3>
+    <p>Hellcorp participates in the EU Online Dispute Resolution (ODR) platform established under Regulation (EU) 524/2013. Consumers may access the platform at <span style="color:var(--hell-red);">https://ec.europa.eu/consumers/odr</span>. Hellcorp's email for ODR purposes is legal@hellcorp.io.</p>
+
+    <h2><span class="sec-num">09</span> DATA BREACH NOTIFICATION</h2>
+    <p>In the event of a personal data breach, Hellcorp will:</p>
+    <ul>
+      <li>Notify the relevant supervisory authority (Irish Data Protection Commission for EEA-wide processing) within 72 hours of becoming aware, in accordance with Article 33 GDPR.</li>
+      <li>Notify affected data subjects without undue delay where the breach is likely to result in a high risk to their rights and freedoms, per Article 34 GDPR.</li>
+      <li>Document all breaches, including facts, effects, and remedial actions taken, in the breach register.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>EU Contact:</strong> Data Protection Officer: <span style="color:var(--hell-red);">dpo@hellcorp.io</span> | Supervisory Authority: Irish Data Protection Commission, 21 Fitzwilliam Square South, Dublin 2, D02 RD28, Ireland | Legal: <span style="color:var(--hell-red);">legal@hellcorp.io</span></p>
+    </div>
+  </div>
+
+  <!-- ==================== GLOBAL ==================== -->
+  <div class="jurisdiction-content" id="jur-global">
+
+    <div class="highlight-box">
+      <p><strong>Agreement to Terms.</strong> This section applies to Users and Clients located in jurisdictions not covered by the United States or European Union tabs above, including but not limited to the United Kingdom, Canada, Australia, Japan, Singapore, South Korea, Brazil, India, the United Arab Emirates, and other territories. Where local law mandates requirements that conflict with these Terms, local law shall prevail to the extent of the conflict.</p>
+    </div>
+
+    <h2><span class="sec-num">01</span> APPLICABLE FRAMEWORK</h2>
+    <p>For jurisdictions not specifically addressed above, the following general principles apply:</p>
+    <ul>
+      <li>The US jurisdiction Terms serve as the default framework, unless superseded by a specific provision below or by mandatory local law.</li>
+      <li>Hellcorp complies with all applicable data protection, consumer protection, and technology regulations in each jurisdiction where it operates or provides Services.</li>
+      <li>Where Hellcorp has established a local entity, the contract is with that entity. Where no local entity exists, the contract is with Hellcorp Inc. (Delaware, USA).</li>
+    </ul>
+
+    <h2><span class="sec-num">02</span> JURISDICTION-SPECIFIC PROVISIONS</h2>
+
+    <h3>United Kingdom (Post-Brexit)</h3>
+    <ul>
+      <li>UK GDPR and the Data Protection Act 2018 apply to processing of UK residents' personal data. Hellcorp Ireland Ltd. is recognized as the UK representative under UK GDPR Article 27.</li>
+      <li>UK adequacy regulations permit data flows from the UK to the EEA. Transfers from the UK to other third countries use UK International Data Transfer Agreement (IDTA) or UK addendum to EU SCCs.</li>
+      <li>Consumer rights under the Consumer Rights Act 2015 and the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 apply.</li>
+      <li>Governing law: England & Wales. Jurisdiction: Courts of England and Wales.</li>
+    </ul>
+
+    <h3>Canada</h3>
+    <ul>
+      <li>PIPEDA (Personal Information Protection and Electronic Documents Act) applies to commercial activities. Provincial legislation (PIPA, Quebec Law 25) applies where enacted and in effect.</li>
+      <li>Quebec's Law 25 (Act respecting the protection of personal information in the private sector, as amended by Bill 64) requires: consent management, privacy impact assessments, breach notification, and designation of a privacy officer for organizations operating in Quebec.</li>
+      <li>Hellcorp responds to access requests under PIPEDA within 30 days.</li>
+      <li>Governing law: Province of Ontario. Jurisdiction: Courts of Ontario, with recognition of the federal jurisdiction where applicable.</li>
+    </ul>
+
+    <h3>Australia</h3>
+    <ul>
+      <li>The Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs) govern personal information handling.</li>
+      <li>Hellcorp complies with the Notifiable Data Breaches (NDB) scheme — affected individuals and the Office of the Australian Information Commissioner (OAIC) are notified when a breach is likely to result in serious harm.</li>
+      <li>Australian Consumer Law (Schedule 2 of the Competition and Consumer Act 2010) applies, including guarantees under Part 3-2 and unfair contract term protections.</li>
+      <li>Governing law: State of New South Wales. Jurisdiction: Federal Court of Australia or courts of New South Wales.</li>
+    </ul>
+
+    <h3>Japan</h3>
+    <ul>
+      <li>The Act on the Protection of Personal Information (APPI), as amended in 2022, applies. Hellcorp complies with PPC (Personal Information Protection Commission) guidelines.</li>
+      <li>Cross-border transfers of personal information require: consent of the data subject, or equivalent measures in the destination country as recognized by the PPC.</li>
+      <li>Japan-EU Mutual Adequacy arrangement facilitates data flows. Japan-UK adequacy also applies.</li>
+      <li>Governing law: Laws of Japan. Jurisdiction: Tokyo District Court.</li>
+    </ul>
+
+    <h3>Singapore</h3>
+    <ul>
+      <li>The Personal Data Protection Act 2012 (PDPA), as amended in 2020, applies including the mandatory data breach notification regime and consent obligations.</li>
+      <li>Hellcorp is registered with the Personal Data Protection Commission (PDPC) where required.</li>
+      <li>Data transfers outside Singapore require the destination to meet comparable protection standards or the data subject's consent.</li>
+      <li>Governing law: Laws of Singapore. Jurisdiction: State Courts of Singapore.</li>
+    </ul>
+
+    <h3>South Korea</h3>
+    <ul>
+      <li>The Personal Information Protection Act (PIPA) applies, including the requirement for consent to cross-border data transfers and the right to request suspension of processing.</li>
+      <li>Hellcorp complies with the Personal Information Protection Commission (PIPC) guidelines and breach notification obligations (within 72 hours for breaches affecting 1,000+ individuals).</li>
+      <li>Governing law: Laws of the Republic of Korea. Jurisdiction: Seoul Central District Court.</li>
+    </ul>
+
+    <h3>Brazil</h3>
+    <ul>
+      <li>Lei Geral de Proteção de Dados (LGPD — Law No. 13,709/2018) applies to the processing of personal data of individuals in Brazil or data collected in Brazil.</p>
+      <ul>
+        <li>Hellcorp has appointed a Data Protection Officer (Encarregado) as required under LGPD.</li>
+        <li>International data transfers require specific legal bases under LGPD Article 33, including adequacy decisions, standard contractual clauses, or consent.</li>
+        <li>Administrative sanctions by the ANPD (Autoridade Nacional de Proteção de Dados) may apply for non-compliance.</li>
+      </ul>
+      <li>Consumer protection under the Consumer Defense Code (CDC — Law No. 8.078/1990) applies.</li>
+      <li>Governing law: Laws of the Federative Republic of Brazil. Jurisdiction: Courts of São Paulo, Brazil.</li>
+    </ul>
+
+    <h3>India</h3>
+    <ul>
+      <li>The Digital Personal Data Protection Act, 2023 (DPDPA) applies to digital personal data processed in India or of Indian data principals.</li>
+      <li>Hellcorp complies with consent management obligations, data principal rights (access, correction, erasure, grievance redressal), and the reasonable security safeguards requirement.</li>
+      <li>The Information Technology Act, 2000 and its rules (including the SPDI Rules, 2011, to the extent still applicable) provide additional framework.</li>
+      <li>Governing law: Laws of India. Jurisdiction: Courts in Bengaluru, Karnataka, India.</li>
+    </ul>
+
+    <h3>United Arab Emirates</h3>
+    <ul>
+      <li>Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data applies at the federal level. DIFC Data Protection Law No. 5 of 2020 and ADGM Data Protection Regulations 2021 apply in their respective free zones.</li>
+      <li>Cross-border transfers require the data subject's consent, a transfer impact assessment, or an adequacy determination by the relevant data protection authority.</li>
+      <li>Governing law: Laws of the UAE (federal). Jurisdiction: Dubai courts (DIFC courts for DIFC-based engagements).</li>
+    </ul>
+
+    <h2><span class="sec-num">03</span> SANCTIONS & EXPORT CONTROLS</h2>
+    <p>Hellcorp complies with all applicable economic sanctions and export control laws, including but not limited to:</p>
+    <ul>
+      <li>US sanctions administered by OFAC (Office of Foreign Assets Control)</li>
+      <li>EU sanctions under the Common Foreign and Security Policy (CFSP)</li>
+      <li>UK sanctions under the Sanctions and Anti-Money Laundering Act 2018</li>
+      <li>UN Security Council sanctions</li>
+      <li>Wassenaar Arrangement controls on dual-use technology</li>
+    </ul>
+    <p>Hellcorp does not provide Services to persons, entities, or countries subject to comprehensive sanctions. Restricted technology transfers are subject to appropriate licensing and compliance review.</p>
+
+    <h2><span class="sec-num">04</span> ANTI-BRIBERY & ANTI-CORRUPTION</h2>
+    <p>Hellcorp maintains zero tolerance for bribery and corruption. All engagements comply with:</p>
+    <ul>
+      <li>US Foreign Corrupt Practices Act (FCPA)</li>
+      <li>UK Bribery Act 2010</li>
+      <li>EU Directive 2017/1374 on combating fraud to the Union's financial interests</li>
+      <li>Applicable local anti-corruption legislation</li>
+    </ul>
+
+    <h2><span class="sec-num">05</span> GENERAL PROVISIONS</h2>
+    <p>All general provisions from Section 14 (US jurisdiction) apply, with the following additions:</p>
+    <ul>
+      <li><strong>Language:</strong> These Terms are in English. Translations into other languages are provided for convenience only. In the event of a conflict between the English version and a translation, the English version prevails.</li>
+      <li><strong>Holidays:</strong> Where deadlines fall on a public holiday in the applicable jurisdiction, the deadline is extended to the next business day.</li>
+      <li><strong>Severability with Local Law Override:</strong> If any provision is unenforceable under local mandatory law, it is modified to the minimum extent necessary to make it enforceable. If modification is not possible, the provision is severed and replaced by a provision that most closely achieves the original commercial intent.</li>
+      <li><strong>Human Rights:</strong> Hellcorp respects internationally recognized human rights as set out in the UN Guiding Principles on Business and Human Rights.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>Global Contact:</strong> For jurisdiction-specific inquiries: <span style="color:var(--hell-red);">legal@hellcorp.io</span> | Data Protection: <span style="color:var(--hell-red);">dpo@hellcorp.io</span> | Physical: Level 66, Hellfire Tower, New York, NY 10001, USA (with local entities in Dublin, London, and Singapore as applicable).</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">ʜᴇʟʟ ᴄᴏʀᴘ</div>
+  <div class="footer-copy">© 2025 HELLCORP INC. ALL RIGHTS RESERVED.</div>
+  <div class="footer-links">
+    <a href="terms.html">Terms</a>
+    <a href="policy.html">Privacy</a>
+    <a href="refund.html">Refunds</a>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function ar(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.transform='translate(-50%,-50%) scale(1.5)';ring.style.borderColor='rgba(255,0,34,0.8)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(255,0,34,0.5)';});
+});
+function switchJurisdiction(id, btn) {
+  document.querySelectorAll('.jurisdiction-content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.jurisdiction-tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('jur-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
 </html>
